@@ -1,0 +1,50 @@
+services:
+  pocketbase:
+    image: ghcr.io/muchobien/pocketbase:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:2013:8080"
+    env_file:
+      - .env.local
+    environment:
+      PB_HOST: 0.0.0.0
+      PB_PORT: "8080"
+    volumes:
+      - pb_data:/pb_data
+      - ./infra/pb_public:/pb_public:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:2015:8787"
+    env_file:
+      - .env.local
+    environment:
+      PB_URL: http://pocketbase:8080
+      API_PORT: "8787"
+    depends_on:
+      pocketbase:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8787/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "2014:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pb_data:
