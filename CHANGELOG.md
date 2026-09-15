@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-15 — HEIC-Upload gefixt + Asset-Caching
+
+- HEIC-Dateien erschienen im Dateidialog nicht bzw. wurden verworfen: `accept` um `.heic/.heif/.hif`-Extension erweitert (MIME-Datenbanken vieler Systeme kennen HEIC nicht), Datei-Erkennung mit Extension-Fallback für leere/generische MIME-Typen, fehlerhafte Einzeldateien brechen den Batch nicht mehr ab. Mit echtem HEIC-Sample (libheif-Testbild) end-to-end verifiziert: Upload → HEIC→JPEG → Vision-Call → Listing.
+- nginx: Hashed Assets immutable gecacht, fehlende Chunks geben sauber 404 statt SPA-Fallback (verhinderte „MIME type text/html"-Fehler nach Deploys), `index.html` no-cache.
+
 ## 2026-09-15 — Fixrunde: BYOK gekippt, Dark-Mode, Admin-User-Management, Hardening
 
 - BYOK entfernt: Modellaufrufe laufen über serverseitige Keys (`DEEPSEEK_API_KEY` primär, `ANTHROPIC_API_KEY` als automatischer Fallback, aktuell ohne Key deaktiviert); Gast-Key-UI und Key-Settings raus; echter DeepSeek-Lauf live verifiziert.

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { api, ApiError } from "../api";
 import { useAuth, errorMessage } from "../auth";
 import { getFingerprint } from "../fingerprint";
-import { compressImage } from "../image";
+import { compressImage, isImageFile } from "../image";
 import ResultView, { type ListingData, type VisionData } from "../components/ResultView";
 
 interface Platform {
@@ -76,8 +76,12 @@ export default function GeneratePage() {
     const list = Array.from(files).slice(0, 24);
     const compressed: string[] = [];
     for (const f of list) {
-      if (!f.type.startsWith("image/")) continue;
-      compressed.push(await compressImage(f));
+      if (!isImageFile(f)) continue;
+      try {
+        compressed.push(await compressImage(f));
+      } catch {
+        // einzelne defekte Dateien überspringen, Rest weiterverarbeiten
+      }
     }
     setImages((prev) => [...prev, ...compressed].slice(0, 24));
   };
@@ -159,7 +163,7 @@ export default function GeneratePage() {
             <input
               ref={fileRef}
               type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif,.hif"
               multiple
               className="hidden"
               onChange={(e) => e.target.files && void addFiles(e.target.files)}
