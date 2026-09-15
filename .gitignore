@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.local
+.env
+.env.*
+!.env.example
+pb_data/
+pb_public/
+.DS_Store
+backups/
