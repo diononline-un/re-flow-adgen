@@ -1,15 +1,20 @@
-function isHeic(file: File): boolean {
-  return (
-    file.type === "image/heic" ||
-    file.type === "image/heif" ||
-    /\.hei[cf]$/i.test(file.name)
-  );
+const HEIC_EXT = /\.(heic|heif|hif)$/i;
+const IMAGE_EXT = /\.(jpe?g|png|webp|gif|heic|heif|hif)$/i;
+
+/** HEIC/HEIF auch dann erkennen, wenn das OS einen leeren/generischen MIME-Typ meldet. */
+export function isHeicFile(file: File): boolean {
+  return /^image\/(heic|heif)/i.test(file.type) || HEIC_EXT.test(file.name);
+}
+
+/** Bild-Dateien erkennen; Extension-Fallback für Systeme ohne HEIC-MIME-Eintrag. */
+export function isImageFile(file: File): boolean {
+  return file.type.startsWith("image/") || IMAGE_EXT.test(file.name);
 }
 
 /** Clientseitige Bildkompression: HEIC→JPEG-Konvertierung, max. 1568 px lange Kante, q0.8, <= 5 MB. */
 export async function compressImage(file: File): Promise<string> {
   let source: Blob = file;
-  if (isHeic(file)) {
+  if (isHeicFile(file)) {
     // heic2any (WASM) nur bei Bedarf laden
     const { default: heic2any } = await import("heic2any");
     const converted = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
