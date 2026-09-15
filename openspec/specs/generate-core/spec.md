@@ -13,15 +13,15 @@ Das System SHALL im Generate-Formular anbieten: mindestens 1 Pflichtbild (weiter
 - **THEN** blockiert das Formular und markiert das fehlende Pflichtfeld
 
 ### Requirement: Vision-Check
-Das System SHALL Bild und Stichworte an das Vision-fähige Modell des hinterlegten Keys senden (Anthropic- oder DeepSeek-kompatibles Format, beide über denselben Endpunkt) und strukturiertes JSON zur Artikelerkennung erhalten: Kategorie, erkannte Marke/Logo, sichtbarer Zustand, Farbe, auffällige Mängel, geschätztes Material.
+Das System SHALL Bild und Stichworte an das Vision-fähige Modell des serverseitig konfigurierten Providers senden (Anthropic- oder DeepSeek-kompatibles Format) und strukturiertes JSON zur Artikelerkennung erhalten: Kategorie, erkannte Marke/Logo, sichtbarer Zustand, Farbe, auffällige Mängel, geschätztes Material.
 
 #### Scenario: Vision-Erkennung erfolgreich
-- **WHEN** ein Nutzer einen gültigen Key hinterlegt und eine Generation startet
+- **WHEN** ein Nutzer eine Generation startet und ein Provider-Key serverseitig konfiguriert ist
 - **THEN** erhält das System ein JSON mit den Erkennungsfeldern und fährt mit dem Harness fort
 
-#### Scenario: Kein Key hinterlegt
-- **WHEN** ein Nutzer ohne hinterlegten Key eine Generation startet
-- **THEN** verweist das System auf den Einstellungsbereich zum Key-Hinterlegen
+#### Scenario: Kein Provider-Key konfiguriert
+- **WHEN** ein Nutzer eine Generation startet, ohne dass ein Provider-Key serverseitig konfiguriert ist (kein Stub-Modus)
+- **THEN** lehnt das System die Generation mit einem Konfigurationsfehler ab
 
 ### Requirement: Plattform-Harness
 Das System SHALL das Erkennungs-JSON plus Stichworte plus Plattform-Konfiguration an einen plattformspezifischen Harness-Prompt übergeben und strukturierten Output erzwingen (JSON-Mode bei DeepSeek, strukturierte Ausgabe bei Claude): Titel, Beschreibung, Item-Specifics/Tags, ggf. Hashtags.

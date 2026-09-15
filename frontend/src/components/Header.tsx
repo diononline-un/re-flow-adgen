@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth";
@@ -8,13 +9,32 @@ const NAV = [
   { to: "/history", key: "nav.history" },
   { to: "/settings", key: "nav.settings" },
   { to: "/pricing", key: "nav.pricing" },
-  { to: "/admin", key: "nav.admin" },
 ];
+
+function isDark(): boolean {
+  return document.documentElement.classList.contains("dark");
+}
 
 export default function Header() {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [dark, setDark] = useState(isDark);
+
+  useEffect(() => {
+    setDark(isDark());
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !isDark();
+    document.documentElement.classList.toggle("dark", next);
+    try {
+      localStorage.setItem("adgen_theme", next ? "dark" : "light");
+    } catch {
+      // localStorage nicht verfügbar — Theme gilt nur für diese Sitzung
+    }
+    setDark(next);
+  };
 
   return (
     <header className="border-b-4 border-ink bg-paper">
@@ -40,6 +60,18 @@ export default function Header() {
               {t(item.key)}
             </NavLink>
           ))}
+          {user?.is_admin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                `border-2 px-2 py-1 font-display text-xs uppercase tracking-wide ${
+                  isActive ? "border-ink bg-ink text-paper" : "border-transparent hover:border-ink"
+                }`
+              }
+            >
+              {t("nav.admin")}
+            </NavLink>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -55,6 +87,15 @@ export default function Header() {
               </option>
             ))}
           </select>
+
+          <button
+            className="btn-pixel px-2 py-1 text-xs"
+            onClick={toggleTheme}
+            title={t("theme.label")}
+            aria-label={t("theme.label")}
+          >
+            {dark ? t("theme.light") : t("theme.dark")}
+          </button>
 
           {user ? (
             <div className="flex items-center gap-2">

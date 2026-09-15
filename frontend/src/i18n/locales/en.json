@@ -114,7 +114,20 @@
     "tier3": "3 months — 13.50 € (4.50 €/month)",
     "tier6": "6 months — 24.00 € (4.00 €/month)",
     "tier12": "12 months — 39.00 € (3.25 €/month)",
-    "tierNote": "Paid tier unlocks more generations only. After donating, message support to get it activated."
+    "tierNote": "Paid tier unlocks more generations only. After donating, message support to get it activated.",
+    "selectTier": "Tier",
+    "custom": "Custom amount",
+    "duration": "Duration",
+    "total": "Total",
+    "perMonth": "Per month",
+    "tier1Label": "1 month — 5,00 €",
+    "tier3Label": "3 months — 13,50 €",
+    "tier6Label": "6 months — 24,00 €",
+    "tier12Label": "12 months — 39,00 €",
+    "tier1Duration": "1 month",
+    "tier3Duration": "3 months",
+    "tier6Duration": "6 months",
+    "tier12Duration": "12 months"
   },
   "admin": {
     "title": "Admin",
@@ -137,10 +150,29 @@
     "comment": "Feedback text",
     "rating": "Rating",
     "pbAdminHint": "User management, fingerprint flags and support tiers: PocketBase Admin UI at /pb/_/",
-    "noData": "No data yet."
+    "noData": "No data yet.",
+    "users": "Users",
+    "actions": "Actions",
+    "gensUsed": "Generations",
+    "supportTier": "Support tier",
+    "grantTier": "Grant tier",
+    "revokeTier": "Revoke tier",
+    "block": "Block",
+    "unblock": "Unblock",
+    "flaggedDevices": "Flagged devices",
+    "noFlags": "No flagged devices.",
+    "unlock": "Unlock",
+    "unlocked": "Unlocked",
+    "accountsSeen": "Accounts",
+    "ip": "IP"
   },
   "footer": {
     "madeWith": "Pixel by pixel.",
     "support": "Support: Discord"
+  },
+  "theme": {
+    "label": "Theme",
+    "dark": "Dark",
+    "light": "Light"
   }
 }

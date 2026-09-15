@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Farbwelt: Light = klassisch weiß, Dark = invertiert (Default). RGB-Tripel für Tailwind-Opacity. */
+:root {
+  --paper: 255 255 255;
+  --ink: 0 0 0;
+  --gray1: 229 229 229;
+  --gray2: 179 179 179;
+  --gray3: 107 107 107;
+  --gray4: 43 43 43;
+  --signal: 255 43 43;
+  --shadow-c: 0 0 0;
+  --dot: 0 0 0;
+  --dot-light: 229 229 229;
+}
+
+html.dark {
+  --paper: 11 11 11;
+  --ink: 242 242 242;
+  --gray1: 43 43 43;
+  --gray2: 74 74 74;
+  --gray3: 154 154 154;
+  --gray4: 216 216 216;
+  --signal: 255 77 77;
+  --shadow-c: 242 242 242;
+  --dot: 242 242 242;
+  --dot-light: 43 43 43;
+}
+
 @layer base {
   html {
     @apply bg-paper text-ink;
@@ -42,11 +69,11 @@
     @apply font-mono text-sm;
   }
   .halftone {
-    background-image: radial-gradient(circle, #000000 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgb(var(--dot)) 1px, transparent 1px);
     background-size: 8px 8px;
   }
   .halftone-light {
-    background-image: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgb(var(--dot-light)) 1px, transparent 1px);
     background-size: 8px 8px;
   }
 }

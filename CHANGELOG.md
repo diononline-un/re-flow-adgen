@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-15 — Fixrunde: BYOK gekippt, Dark-Mode, Admin-User-Management, Hardening
+
+- BYOK entfernt: Modellaufrufe laufen über serverseitige Keys (`DEEPSEEK_API_KEY` primär, `ANTHROPIC_API_KEY` als automatischer Fallback, aktuell ohne Key deaktiviert); Gast-Key-UI und Key-Settings raus; echter DeepSeek-Lauf live verifiziert.
+- Admin-Panel ausgebaut: User-Management direkt in /admin (Support-Tier geben/entziehen, sperren/entsperren), geflaggte Geräte entsperren, App-Admin `dionoffline` (is_admin, Passwort = ADMIN_INITIAL_PASSWORD), Admin-Nav nur für Admins sichtbar, Admin-Endpunkte akzeptieren Superuser- und Admin-User-Tokens.
+- Dark-Mode als Default (invertierte Farbwelt über CSS-Variablen), Light/Dark-Umschalter im Header, Theme-Persistenz ohne Flash; PayPal.me-Handle auf `gruenebluete` umgestellt, Tier-Auswahl prefillt den Betrag, Laufzeit-Labels jetzt sauber lokalisiert (EN zeigt nicht mehr Deutsch).
+- HEIC/HEIF-Upload mit automatischer HEIC→JPEG-Konvertierung (heic2any, lazy geladen).
+- Security-Hardening: Helmet auf API, nginx-Security-Header + CSP (mit Hash für Theme-Script), per-Route-Rate-Limits (Login 10/min, Generate 20/min, …), Bild-/Sprach-/Key-Validierung, Prompt-Injection-Schutz für Stichworte (Delimiter + Bereinigung), .env.local 600, Body-Limit 32 MB.
+- Smoke-Test auf 28 Checks erweitert (Admin-Userliste, Tier-Vergabe, dionoffline-Zugriff, Injection-Check, Stub-Override pro Request); Unit-Tests 10/10.
+
 ## 2026-09-15 — MVP komplett (M0–M5, lokaler Docker-Stack)
 
 - Kompletter BYOK-Anzeigenschreiber nach PRD gebaut: PocketBase (Auth/DB/Files, Port 2013), Node-API (Fastify: Vision-Check + Plattform-Harness für eBay/Kleinanzeigen/Vinted/Depop, AES-256-GCM-Key-Storage, Kontingent-/Anti-Abuse, harte Zeichenlimit-Validierung mit Retry, Port 2015), Frontend (React 18/Vite 5/TS/Tailwind, 8-bit-Grayscale-Design, 6 UI-Sprachen, Port 2014 via nginx).
