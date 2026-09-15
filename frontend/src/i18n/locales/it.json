@@ -70,7 +70,9 @@
     "quotaUnlimited": "Livello supporto: nessun limite di generazioni",
     "quotaExceeded": "Quota gratuita esaurita. Vedi Prezzi.",
     "errorProvider": "Errore del provider",
-    "errorGeneric": "Generazione non riuscita"
+    "errorGeneric": "Generazione non riuscita",
+    "imageProcessing": "Elaborazione immagini…",
+    "imageFailed": "{{count}} immagine/i non elaborabili."
   },
   "feedback": {
     "question": "Questo risultato era buono?",

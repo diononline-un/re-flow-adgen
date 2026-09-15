@@ -70,7 +70,9 @@
     "quotaUnlimited": "Nivel de soporte: sin límite de generaciones",
     "quotaExceeded": "Cuota gratuita agotada. Consulta Precios.",
     "errorProvider": "Error del proveedor",
-    "errorGeneric": "Error al generar"
+    "errorGeneric": "Error al generar",
+    "imageProcessing": "Procesando imágenes…",
+    "imageFailed": "{{count}} imagen(es) no se pudieron procesar."
   },
   "feedback": {
     "question": "¿Este resultado fue bueno?",

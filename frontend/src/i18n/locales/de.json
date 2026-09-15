@@ -70,7 +70,9 @@
     "quotaUnlimited": "Support-Tier: kein Generations-Limit",
     "quotaExceeded": "Freikontingent aufgebraucht. Siehe Preise.",
     "errorProvider": "Anbieter-Fehler",
-    "errorGeneric": "Generierung fehlgeschlagen"
+    "errorGeneric": "Generierung fehlgeschlagen",
+    "imageProcessing": "Bilder werden verarbeitet …",
+    "imageFailed": "{{count}} Bild(er) konnten nicht verarbeitet werden."
   },
   "feedback": {
     "question": "War das Ergebnis gut?",

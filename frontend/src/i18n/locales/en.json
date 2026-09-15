@@ -70,7 +70,9 @@
     "quotaUnlimited": "Support tier: no generation limit",
     "quotaExceeded": "Free quota used up. See Pricing.",
     "errorProvider": "Provider error",
-    "errorGeneric": "Generation failed"
+    "errorGeneric": "Generation failed",
+    "imageProcessing": "Processing images…",
+    "imageFailed": "{{count}} image(s) could not be processed."
   },
   "feedback": {
     "question": "Was this result good?",
