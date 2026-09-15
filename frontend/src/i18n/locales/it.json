@@ -114,7 +114,20 @@
     "tier3": "3 mesi — 13,50 € (4,50 €/mese)",
     "tier6": "6 mesi — 24,00 € (4,00 €/mese)",
     "tier12": "12 mesi — 39,00 € (3,25 €/mese)",
-    "tierNote": "Il livello a pagamento sblocca solo più generazioni. Dopo la donazione, contatta l'assistenza per attivarlo."
+    "tierNote": "Il livello a pagamento sblocca solo più generazioni. Dopo la donazione, contatta l'assistenza per attivarlo.",
+    "selectTier": "Opzione",
+    "custom": "Importo libero",
+    "duration": "Durata",
+    "total": "Totale",
+    "perMonth": "Al mese",
+    "tier1Label": "1 mese — 5,00 €",
+    "tier3Label": "3 mesi — 13,50 €",
+    "tier6Label": "6 mesi — 24,00 €",
+    "tier12Label": "12 mesi — 39,00 €",
+    "tier1Duration": "1 mese",
+    "tier3Duration": "3 mesi",
+    "tier6Duration": "6 mesi",
+    "tier12Duration": "12 mesi"
   },
   "admin": {
     "title": "Admin",
@@ -137,10 +150,29 @@
     "comment": "Testo del feedback",
     "rating": "Valutazione",
     "pbAdminHint": "Gestione utenti, impronte e livelli di supporto: interfaccia di amministrazione PocketBase su /pb/_/",
-    "noData": "Ancora nessun dato."
+    "noData": "Ancora nessun dato.",
+    "users": "Utenti",
+    "actions": "Azioni",
+    "gensUsed": "Generazioni",
+    "supportTier": "Livello supporto",
+    "grantTier": "Assegna livello",
+    "revokeTier": "Revoca livello",
+    "block": "Blocca",
+    "unblock": "Sblocca",
+    "flaggedDevices": "Dispositivi segnalati",
+    "noFlags": "Nessun dispositivo segnalato.",
+    "unlock": "Sblocca",
+    "unlocked": "Sbloccato",
+    "accountsSeen": "Accounts",
+    "ip": "IP"
   },
   "footer": {
     "madeWith": "Pixel per pixel.",
     "support": "Assistenza: Discord"
+  },
+  "theme": {
+    "label": "Tema",
+    "dark": "Scuro",
+    "light": "Chiaro"
   }
 }

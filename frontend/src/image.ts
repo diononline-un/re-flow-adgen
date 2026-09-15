@@ -1,10 +1,26 @@
-/** Clientseitige Bildkompression: max. 1568 px lange Kante, JPEG q0.8, <= 5 MB. */
+function isHeic(file: File): boolean {
+  return (
+    file.type === "image/heic" ||
+    file.type === "image/heif" ||
+    /\.hei[cf]$/i.test(file.name)
+  );
+}
+
+/** Clientseitige Bildkompression: HEIC→JPEG-Konvertierung, max. 1568 px lange Kante, q0.8, <= 5 MB. */
 export async function compressImage(file: File): Promise<string> {
+  let source: Blob = file;
+  if (isHeic(file)) {
+    // heic2any (WASM) nur bei Bedarf laden
+    const { default: heic2any } = await import("heic2any");
+    const converted = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.8 });
+    source = (Array.isArray(converted) ? converted[0] : converted) as Blob;
+  }
+
   const dataUrl: string = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = () => reject(new Error("read failed"));
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(source);
   });
 
   const img = await new Promise<HTMLImageElement>((resolve, reject) => {

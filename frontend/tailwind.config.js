@@ -1,16 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        paper: "#FFFFFF",
-        gray1: "#E5E5E5",
-        gray2: "#B3B3B3",
-        gray3: "#6B6B6B",
-        gray4: "#2B2B2B",
-        ink: "#000000",
-        signal: "#FF2B2B",
+        paper: "rgb(var(--paper) / <alpha-value>)",
+        gray1: "rgb(var(--gray1) / <alpha-value>)",
+        gray2: "rgb(var(--gray2) / <alpha-value>)",
+        gray3: "rgb(var(--gray3) / <alpha-value>)",
+        gray4: "rgb(var(--gray4) / <alpha-value>)",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        signal: "rgb(var(--signal) / <alpha-value>)",
       },
       fontFamily: {
         display: ['"Archivo Black"', "sans-serif"],
@@ -24,9 +25,9 @@ export default {
         none: "0px",
       },
       boxShadow: {
-        pixel: "4px 4px 0 0 #000000",
-        "pixel-sm": "2px 2px 0 0 #000000",
-        "pixel-in": "inset 2px 2px 0 0 #000000",
+        pixel: "4px 4px 0 0 rgb(var(--shadow-c))",
+        "pixel-sm": "2px 2px 0 0 rgb(var(--shadow-c))",
+        "pixel-in": "inset 2px 2px 0 0 rgb(var(--shadow-c))",
       },
     },
   },

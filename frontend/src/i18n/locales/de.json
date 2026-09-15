@@ -114,7 +114,20 @@
     "tier3": "3 Monate — 13,50 € (4,50 €/Monat)",
     "tier6": "6 Monate — 24,00 € (4,00 €/Monat)",
     "tier12": "12 Monate — 39,00 € (3,25 €/Monat)",
-    "tierNote": "Die bezahlte Stufe schaltet ausschließlich mehr Generations frei. Nach der Spende beim Support melden zum Freischalten."
+    "tierNote": "Die bezahlte Stufe schaltet ausschließlich mehr Generations frei. Nach der Spende beim Support melden zum Freischalten.",
+    "selectTier": "Staffel",
+    "custom": "Eigener Betrag",
+    "duration": "Laufzeit",
+    "total": "Gesamt",
+    "perMonth": "Pro Monat",
+    "tier1Label": "1 Monat — 5,00 €",
+    "tier3Label": "3 Monate — 13,50 €",
+    "tier6Label": "6 Monate — 24,00 €",
+    "tier12Label": "12 Monate — 39,00 €",
+    "tier1Duration": "1 Monat",
+    "tier3Duration": "3 Monate",
+    "tier6Duration": "6 Monate",
+    "tier12Duration": "12 Monate"
   },
   "admin": {
     "title": "Admin",
@@ -137,10 +150,29 @@
     "comment": "Feedback-Text",
     "rating": "Bewertung",
     "pbAdminHint": "User-Management, Fingerprint-Flags und Support-Tier: PocketBase-Admin-UI unter /pb/_/",
-    "noData": "Noch keine Daten."
+    "noData": "Noch keine Daten.",
+    "users": "Nutzer",
+    "actions": "Aktionen",
+    "gensUsed": "Generations",
+    "supportTier": "Support-Tier",
+    "grantTier": "Tier geben",
+    "revokeTier": "Tier entziehen",
+    "block": "Sperren",
+    "unblock": "Entsperren",
+    "flaggedDevices": "Geflaggte Geräte",
+    "noFlags": "Keine geflaggten Geräte.",
+    "unlock": "Entsperren",
+    "unlocked": "Entsperrt",
+    "accountsSeen": "Accounts",
+    "ip": "IP"
   },
   "footer": {
     "madeWith": "Pixel für Pixel.",
     "support": "Support: Discord"
+  },
+  "theme": {
+    "label": "Farbschema",
+    "dark": "Dunkel",
+    "light": "Hell"
   }
 }

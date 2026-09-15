@@ -42,8 +42,6 @@ export default function GeneratePage() {
   const [listingLang, setListingLang] = useState(user?.last_listing_lang || "de");
   const [keywords, setKeywords] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const [guestKey, setGuestKey] = useState("");
-  const [guestProvider, setGuestProvider] = useState("anthropic");
   const [step, setStep] = useState<"idle" | "vision" | "harness">("idle");
   const [result, setResult] = useState<GenerateResponse | null>(null);
   const [sessionHistory, setSessionHistory] = useState<GenerateResponse[]>([]);
@@ -87,7 +85,6 @@ export default function GeneratePage() {
   const submit = async () => {
     setError("");
     if (images.length === 0) return;
-    // Key-Pflicht prüft serverseitig (Stub-Modus erlaubt leeren Key)
     setStep("vision");
     setResult(null);
     try {
@@ -100,8 +97,6 @@ export default function GeneratePage() {
           platform,
           listingLang,
           fingerprintHash: fp,
-          apiKey: user ? undefined : guestKey.trim(),
-          provider: user ? undefined : guestProvider,
         },
       });
       setStep("harness");
@@ -129,9 +124,7 @@ export default function GeneratePage() {
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-8">
       <div>
         <h1 className="font-display text-4xl uppercase leading-none">{t("generate.pageTitle")}</h1>
-        <p className="mt-2 font-mono text-sm text-gray3">
-          {t("app.tagline")} — {t("app.byok")}
-        </p>
+        <p className="mt-2 font-mono text-sm text-gray3">{t("app.tagline")}</p>
       </div>
 
       {quota && (
@@ -166,7 +159,7 @@ export default function GeneratePage() {
             <input
               ref={fileRef}
               type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif"
               multiple
               className="hidden"
               onChange={(e) => e.target.files && void addFiles(e.target.files)}
@@ -253,37 +246,7 @@ export default function GeneratePage() {
           </div>
         </div>
 
-        {/* Gast-Key */}
-        {!user && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="sm:col-span-2">
-              <label className="label-pixel" htmlFor="guestKey">
-                {t("generate.guestKey")}
-              </label>
-              <input
-                id="guestKey"
-                type="password"
-                className="input-pixel"
-                value={guestKey}
-                onChange={(e) => setGuestKey(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="label-pixel" htmlFor="guestProvider">
-                {t("generate.guestProvider")}
-              </label>
-              <select
-                id="guestProvider"
-                className="input-pixel"
-                value={guestProvider}
-                onChange={(e) => setGuestProvider(e.target.value)}
-              >
-                <option value="anthropic">{t("settings.providerAnthropic")}</option>
-                <option value="deepseek">{t("settings.providerDeepseek")}</option>
-              </select>
-            </div>
-          </div>
-        )}
+        {/* Gast-Key entfällt: BYOK gekippt, Provider-Key liegt serverseitig */}
 
         {error && (
           <p className="border-2 border-signal bg-signal/10 px-3 py-2 font-mono text-xs text-signal">

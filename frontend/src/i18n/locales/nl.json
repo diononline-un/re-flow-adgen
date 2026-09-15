@@ -114,7 +114,20 @@
     "tier3": "3 maanden — 13,50 € (4,50 €/maand)",
     "tier6": "6 maanden — 24,00 € (4,00 €/maand)",
     "tier12": "12 maanden — 39,00 € (3,25 €/maand)",
-    "tierNote": "Het betaalde niveau ontgrendelt alleen meer generaties. Neem na het doneren contact op met de support om het te activeren."
+    "tierNote": "Het betaalde niveau ontgrendelt alleen meer generaties. Neem na het doneren contact op met de support om het te activeren.",
+    "selectTier": "Pakket",
+    "custom": "Eigen bedrag",
+    "duration": "Looptijd",
+    "total": "Totaal",
+    "perMonth": "Per maand",
+    "tier1Label": "1 maand — 5,00 €",
+    "tier3Label": "3 maanden — 13,50 €",
+    "tier6Label": "6 maanden — 24,00 €",
+    "tier12Label": "12 maanden — 39,00 €",
+    "tier1Duration": "1 maand",
+    "tier3Duration": "3 maanden",
+    "tier6Duration": "6 maanden",
+    "tier12Duration": "12 maanden"
   },
   "admin": {
     "title": "Admin",
@@ -137,10 +150,29 @@
     "comment": "Feedbacktekst",
     "rating": "Beoordeling",
     "pbAdminHint": "Gebruikersbeheer, vingerafdrukken en supportniveaus: PocketBase Admin UI op /pb/_/",
-    "noData": "Nog geen gegevens."
+    "noData": "Nog geen gegevens.",
+    "users": "Gebruikers",
+    "actions": "Acties",
+    "gensUsed": "Generaties",
+    "supportTier": "Supportniveau",
+    "grantTier": "Niveau geven",
+    "revokeTier": "Niveau intrekken",
+    "block": "Blokkeren",
+    "unblock": "Deblokkeren",
+    "flaggedDevices": "Gemarkeerde apparaten",
+    "noFlags": "Geen gemarkeerde apparaten.",
+    "unlock": "Ontgrendelen",
+    "unlocked": "Ontgrendeld",
+    "accountsSeen": "Accounts",
+    "ip": "IP"
   },
   "footer": {
     "madeWith": "Pixel voor pixel.",
     "support": "Support: Discord"
+  },
+  "theme": {
+    "label": "Thema",
+    "dark": "Donker",
+    "light": "Licht"
   }
 }

@@ -1,10 +1,19 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Re-Flow-AdGen — plattformfertige Anzeigen aus Produktfoto + Stichworten. BYOK." />
+    <meta name="description" content="Re-Flow-AdGen — plattformfertige Anzeigen aus Produktfoto + Stichworten." />
     <title>Re-Flow-AdGen</title>
+    <script>
+      // Theme vor dem ersten Paint setzen (Default: dark)
+      (function () {
+        try {
+          var t = localStorage.getItem("adgen_theme");
+          if (t === "light") document.documentElement.classList.remove("dark");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

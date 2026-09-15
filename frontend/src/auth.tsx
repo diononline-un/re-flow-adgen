@@ -9,8 +9,7 @@ export interface User {
   support_tier?: boolean;
   blocked?: boolean;
   gens_free_used?: number;
-  api_key_encrypted?: string;
-  api_key_provider?: string;
+  is_admin?: boolean;
 }
 
 interface AuthCtx {

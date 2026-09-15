@@ -20,7 +20,7 @@ export async function userFromToken(token: string | undefined): Promise<Record<s
   }
 }
 
-/** Validates a superuser (admin) Bearer token. */
+/** Validiert Admin-Zugriff: Superuser-Token ODER User-Token mit is_admin. */
 export async function adminFromToken(token: string | undefined): Promise<boolean> {
   if (!token) return false;
   const client = new PocketBase(PB_URL);
@@ -29,13 +29,20 @@ export async function adminFromToken(token: string | undefined): Promise<boolean
     await client.collection("_superusers").authRefresh();
     return true;
   } catch {
+    // kein Superuser — ggf. App-Admin
+  }
+  try {
+    const res = await client.collection("users").authRefresh();
+    const rec = res.record as unknown as Record<string, unknown>;
+    return !!rec.is_admin;
+  } catch {
     return false;
   }
 }
 
 export function sanitizeUser(rec: Record<string, unknown>): Record<string, unknown> {
-  const { api_key_encrypted, api_key_hash, recovery_code_hash, passwordHash, tokenKey, email, ...rest } = rec;
-  void api_key_encrypted; void api_key_hash; void recovery_code_hash; void passwordHash; void tokenKey; void email;
+  const { api_key_encrypted, api_key_hash, recovery_code_hash, passwordHash, tokenKey, email, password, ...rest } = rec;
+  void api_key_encrypted; void api_key_hash; void recovery_code_hash; void passwordHash; void tokenKey; void email; void password;
   return rest;
 }
 

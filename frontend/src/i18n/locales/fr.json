@@ -114,7 +114,20 @@
     "tier3": "3 mois — 13,50 € (4,50 €/mois)",
     "tier6": "6 mois — 24,00 € (4,00 €/mois)",
     "tier12": "12 mois — 39,00 € (3,25 €/mois)",
-    "tierNote": "Le niveau payant débloque uniquement plus de générations. Après votre don, contactez le support pour l'activer."
+    "tierNote": "Le niveau payant débloque uniquement plus de générations. Après votre don, contactez le support pour l'activer.",
+    "selectTier": "Formule",
+    "custom": "Montant libre",
+    "duration": "Durée",
+    "total": "Total",
+    "perMonth": "Par mois",
+    "tier1Label": "1 mois — 5,00 €",
+    "tier3Label": "3 mois — 13,50 €",
+    "tier6Label": "6 mois — 24,00 €",
+    "tier12Label": "12 mois — 39,00 €",
+    "tier1Duration": "1 mois",
+    "tier3Duration": "3 mois",
+    "tier6Duration": "6 mois",
+    "tier12Duration": "12 mois"
   },
   "admin": {
     "title": "Admin",
@@ -137,10 +150,29 @@
     "comment": "Texte du commentaire",
     "rating": "Note",
     "pbAdminHint": "Gestion des utilisateurs, empreintes et niveaux de support : interface d'administration PocketBase sur /pb/_/",
-    "noData": "Pas encore de données."
+    "noData": "Pas encore de données.",
+    "users": "Utilisateurs",
+    "actions": "Actions",
+    "gensUsed": "Générations",
+    "supportTier": "Palier support",
+    "grantTier": "Donner le palier",
+    "revokeTier": "Retirer le palier",
+    "block": "Bloquer",
+    "unblock": "Débloquer",
+    "flaggedDevices": "Appareils signalés",
+    "noFlags": "Aucun appareil signalé.",
+    "unlock": "Déverrouiller",
+    "unlocked": "Déverrouillé",
+    "accountsSeen": "Accounts",
+    "ip": "IP"
   },
   "footer": {
     "madeWith": "Pixel par pixel.",
     "support": "Support : Discord"
+  },
+  "theme": {
+    "label": "Thème",
+    "dark": "Sombre",
+    "light": "Clair"
   }
 }

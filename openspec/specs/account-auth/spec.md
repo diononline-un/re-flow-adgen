@@ -1,7 +1,7 @@
 # account-auth Specification
 
 ## Purpose
-Registrierung, Login und BYOK-Key-Verwaltung: Nutzer melden sich ausschließlich mit Username und Passwort an und hinterlegen ihren eigenen Claude- oder DeepSeek-API-Key verschlüsselt.
+Registrierung und Login: Nutzer melden sich ausschließlich mit Username und Passwort an. Modellaufrufe laufen über serverseitige Provider-Keys (BYOK gekippt), Nutzer-Keys existieren nicht mehr.
 
 ## Requirements
 
@@ -23,27 +23,23 @@ Das System SHALL Login über Username und Passwort anbieten. Es SHALL keinen aut
 - **WHEN** ein Nutzer falsche Zugangsdaten eingibt
 - **THEN** zeigt das System eine Fehlermeldung ohne Hinweis, welcher Teil der Zugangsdaten falsch war
 
-### Requirement: BYOK-Key verschlüsselt speichern
-Das System SHALL den API-Key serverseitig AES-256-GCM-verschlüsselt speichern (Key aus Server-ENV) und niemals im Klartext persistieren oder loggen. Der Nutzer SHALL den Key im Einstellungsbereich hinterlegen und jederzeit überschreiben können.
+### Requirement: Server-seitige Provider-Keys
+Das System SHALL Modellaufrufe über serverseitig konfigurierte Provider-Keys ausführen (`DEEPSEEK_API_KEY` primär, `ANTHROPIC_API_KEY` als Fallback). Keys SHALL ausschließlich aus der Server-ENV kommen, nie im Repo liegen und nie geloggt oder an Clients ausgeliefert werden. Nutzer SHALL keine eigenen Keys hinterlegen können.
 
-#### Scenario: Key hinterlegen
-- **WHEN** ein eingeloggter Nutzer einen API-Key samt Provider-Typ (Claude oder DeepSeek) speichert
-- **THEN** speichert das System nur die verschlüsselte Form und den Provider-Typ und bestätigt die Speicherung
+#### Scenario: Primärer Provider fehlerhaft
+- **WHEN** der primäre Provider einen Aufruf ablehnt und ein Fallback-Key konfiguriert ist
+- **THEN** wiederholt das System Vision-Check und Harness automatisch über den Fallback-Provider
 
-#### Scenario: Key überschreiben
-- **WHEN** ein Nutzer einen bereits hinterlegten Key durch einen neuen ersetzt
-- **THEN** überschreibt das System den verschlüsselten Key, ohne den alten irgendwo auszugeben
+#### Scenario: Kein Provider-Key konfiguriert
+- **WHEN** kein Provider-Key gesetzt ist und keine Stub-Anforderung vorliegt
+- **THEN** lehnt das System die Generation mit einem Konfigurationsfehler ab
 
 ### Requirement: Sperrlogik neuer Accounts
-Das System SHALL einen neuen Account sofort sperren, wenn der Device-Fingerprint ODER der eingegebene API-Key bereits einem bestehenden Account zugeordnet ist.
+Das System SHALL einen neuen Account sofort sperren, wenn der Device-Fingerprint bereits einem bestehenden Account zugeordnet ist.
 
 #### Scenario: Registrierung mit bereits genutztem Fingerprint
 - **WHEN** ein Nutzer sich mit einem Fingerprint registriert, der bereits einem bestehenden Account zugeordnet ist
 - **THEN** wird der neue Account gesperrt und der Nutzer erhält eine Meldung
-
-#### Scenario: Key bereits anderem Account zugeordnet
-- **WHEN** ein Nutzer einen API-Key speichert, der bereits einem anderen Account zugeordnet ist
-- **THEN** sperrt das System den Account des Nutzers und verweist auf den Support
 
 ### Requirement: Sprachpräferenzen pro Nutzer
 Das System SHALL für eingeloggte Nutzer die zuletzt verwendete Listing-Sprache speichern und beim nächsten Generate-Flow vorauswählen.

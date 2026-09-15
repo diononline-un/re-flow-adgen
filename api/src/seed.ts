@@ -1,4 +1,5 @@
 import { pb } from "./pb.ts";
+import { ADMIN_PASSWORD } from "./config.ts";
 
 const PLATFORMS: Array<{
   platform: string;
@@ -141,6 +142,7 @@ export async function seed(): Promise<void> {
     text("api_key_provider", { max: 20 }),
     text("api_key_hash", { max: 64 }),
     text("recovery_code_hash", { max: 200 }),
+    bool("is_admin"),
   ]);
 
   const generationsId = await ensureCollection("generations", "base", [
@@ -209,6 +211,35 @@ export async function seed(): Promise<void> {
       await pb.collection("platform_configs").update(existing.id as string, p);
     } catch {
       await pb.collection("platform_configs").create(p);
+    }
+  }
+
+  // App-Admin dionoffline (falls nicht vorhanden) — Passwort = ADMIN_INITIAL_PASSWORD aus ENV
+  if (ADMIN_PASSWORD) {
+    try {
+      const existing = (await pb.collection("users").getFirstListItem('username = "dionoffline"')) as unknown as Record<string, unknown>;
+      if (!existing.is_admin) {
+        await pb.collection("users").update(existing.id as string, { is_admin: true });
+      }
+    } catch {
+      await pb.collection("users").create({
+        email: "dionoffline@adgen.local",
+        emailVisibility: false,
+        password: ADMIN_PASSWORD,
+        passwordConfirm: ADMIN_PASSWORD,
+        username: "dionoffline",
+        tenant_id: "default",
+        preferred_ui_lang: "de",
+        last_listing_lang: "",
+        support_tier: false,
+        blocked: false,
+        gens_free_used: 0,
+        api_key_encrypted: "",
+        api_key_provider: "",
+        api_key_hash: "",
+        recovery_code_hash: "",
+        is_admin: true,
+      });
     }
   }
 }

@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { api, ApiError } from "../api";
-import { useAuth, errorMessage } from "../auth";
+import { api } from "../api";
+import { useAuth } from "../auth";
 import { setUiLang } from "../i18n";
 
 const LISTING_LANGS = ["de", "en", "fr", "it", "nl", "es"];
@@ -10,29 +10,7 @@ const LISTING_LANGS = ["de", "en", "fr", "it", "nl", "es"];
 export default function SettingsPage() {
   const { t } = useTranslation();
   const { user, setUser } = useAuth();
-  const [apiKey, setApiKey] = useState("");
-  const [provider, setProvider] = useState("anthropic");
   const [message, setMessage] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
-
-  const saveKey = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!user || !apiKey.trim()) return;
-    try {
-      const res = await api<{ user: typeof user }>("/me/settings", {
-        method: "PUT",
-        body: { apiKey: apiKey.trim(), provider },
-      });
-      setUser(res.user);
-      setApiKey("");
-      setMessage({ kind: "ok", text: t("settings.saved") });
-    } catch (err) {
-      const code = err instanceof ApiError ? err.code : "";
-      setMessage({
-        kind: "err",
-        text: code === "key_in_use" ? t("settings.keyInUse") : errorMessage(err, t("generate.errorGeneric")),
-      });
-    }
-  };
 
   const saveLangs = async (patch: { preferredUiLang?: string; lastListingLang?: string }) => {
     if (!user) return;
@@ -62,43 +40,6 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-xl space-y-8 px-4 py-8">
       <h1 className="font-display text-3xl uppercase leading-none">{t("settings.title")}</h1>
-
-      <form className="card-pixel space-y-4 p-6" onSubmit={saveKey}>
-        <h2 className="font-display text-lg uppercase">{t("settings.apiKey")}</h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div>
-            <label className="label-pixel" htmlFor="provider">
-              {t("settings.provider")}
-            </label>
-            <select
-              id="provider"
-              className="input-pixel"
-              value={provider}
-              onChange={(e) => setProvider(e.target.value)}
-            >
-              <option value="anthropic">{t("settings.providerAnthropic")}</option>
-              <option value="deepseek">{t("settings.providerDeepseek")}</option>
-            </select>
-          </div>
-          <div className="sm:col-span-2">
-            <label className="label-pixel" htmlFor="apiKey">
-              {t("settings.apiKey")}
-            </label>
-            <input
-              id="apiKey"
-              type="password"
-              className="input-pixel"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder={user.api_key_encrypted ? t("settings.clearKey", { provider: user.api_key_provider ?? "?" }) : ""}
-            />
-          </div>
-        </div>
-        <p className="font-mono text-[10px] text-gray3">{t("settings.apiKeyHint")}</p>
-        <button className="btn-pixel-solid" disabled={!apiKey.trim()}>
-          {t("settings.save")}
-        </button>
-      </form>
 
       <div className="card-pixel space-y-4 p-6">
         <h2 className="font-display text-lg uppercase">{t("settings.uiLang")}</h2>

@@ -3,26 +3,27 @@ name: Re-Flow-AdGen
 status: in-development
 progress: 100
 last_updated: 2026-09-15
-tags: [web, docker, pocketbase, byok, ai]
+tags: [web, docker, pocketbase, ai]
 ---
 
 # Re-Flow-AdGen — Projektstatus
 
-BYOK-Anzeigenschreiber: Foto + Stichworte → fertiges Listing für eBay, Kleinanzeigen, Vinted, Depop.
+Anzeigenschreiber: Foto + Stichworte → fertiges Listing für eBay, Kleinanzeigen, Vinted, Depop. Server-Key statt BYOK.
 
 ## Ist-Zustand
 
-- MVP lokal komplett (M0–M5): Docker-Stack (PocketBase 2013, API 2015, Frontend 2014) läuft, Smoke-Test 17/17 grün.
-- Auth (Username/PW), BYOK-Key (AES-256-GCM), Vision-Check + Harness für 4 Plattformen, harte Limit-Validierung, History, Feedback → Tickets, Admin (Stats/User/Flags), Fingerprint-Kontingent (5 free) + Anti-Abuse, 6 UI-Sprachen.
-- PRD offene Punkte geklärt: kein Stripe (PayPal.me-Hinweis + manueller Support-Tier), Admin-Passwort statt WebAuthn, lokaler PB-Filespeicher statt R2.
+- MVP lokal komplett + Fixrunde: Docker-Stack (PocketBase 2013, API 2015, Frontend 2014), Smoke 28/28 grün, Unit-Tests 10/10.
+- BYOK gekippt: DeepSeek-Server-Key aktiv (echter Lauf verifiziert), Anthropic-Fallback vorbereitet. Dark-Mode Default + Light-Umschalter, HEIC→JPEG-Auto-Convert, 6 UI-Sprachen.
+- Admin in /admin: User-Management (Support-Tier, sperren), Flag-Entsperrung, Tickets, Stats; App-Admin dionoffline; Paywall via paypal.me/gruenebluete mit Tier-Prefill.
+- Hardening: CSP/Security-Header, Helmet, per-Route-Rate-Limits, Input-Validierung, Prompt-Injection-Schutz, Keys nur in .env.local.
 
 ## Nächste Schritte
 
-- [x] M0 Fundament (PB, Auth, Design, i18n)
-- [x] M1 Core Generate-Flow (Upload, Key, Adapter, eBay-Harness)
-- [x] M2 Alle Plattformen + Validierung + History
-- [x] M3 Limits & Paywall (Fingerprint, Zähler, Pricing-Seite)
-- [x] M4 Feedback & Tickets & Admin
-- [x] M5 Politur (Design, Smoke-Test, Rate-Limit, Doku)
-- [ ] Echte BYOK-Keys mit PROVIDER_STUB=false gegenprüfen
+- [x] User-Management + Support-Tier direkt im Admin-Panel
+- [x] PayPal.me gruenebluete + Tier-Amount-Prefill + lokalisierte Laufzeiten
+- [x] Dark/Light-Mode (Default Dark)
+- [x] HEIC-Upload mit Konvertierung
+- [x] BYOK raus, DeepSeek-Server-Key + Anthropic-Fallback
+- [x] dionoffline als App-Admin, Admin-Nav nur für Admins
+- [x] Security-Hardening + Prompt-Injection-Schutz
 - [ ] Später: Stripe/R2/WebAuthn, VPS-Deployment, Limit-Verifikation gegen Marktplatz-Hilfeseiten
