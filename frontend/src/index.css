@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-paper text-ink;
+    image-rendering: pixelated;
+  }
+  body {
+    @apply font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-ink text-paper;
+  }
+}
+
+@layer components {
+  .btn-pixel {
+    @apply inline-flex items-center justify-center gap-2 border-2 border-ink bg-paper px-4 py-2
+      font-display uppercase tracking-wide text-ink shadow-pixel-sm transition-none
+      hover:bg-ink hover:text-paper active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+      disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-paper disabled:hover:text-ink;
+  }
+  .btn-pixel-solid {
+    @apply btn-pixel bg-ink text-paper hover:bg-paper hover:text-ink;
+  }
+  .btn-pixel-danger {
+    @apply btn-pixel border-signal bg-signal text-paper hover:bg-paper hover:text-signal;
+  }
+  .card-pixel {
+    @apply border-2 border-ink bg-paper shadow-pixel;
+  }
+  .input-pixel {
+    @apply w-full border-2 border-ink bg-paper px-3 py-2 font-mono text-sm outline-none
+      placeholder:text-gray3 focus:bg-gray1;
+  }
+  .label-pixel {
+    @apply mb-1 block font-display text-xs uppercase tracking-widest;
+  }
+  .mono-counter {
+    @apply font-mono text-sm;
+  }
+  .halftone {
+    background-image: radial-gradient(circle, #000000 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+  .halftone-light {
+    background-image: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+}
