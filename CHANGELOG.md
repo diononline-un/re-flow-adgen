@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-15 — Upload-Dropzone für normale User-Interaktion abgesichert
+
+- Klick- und Drop-Pfad hart verifiziert (Klick → Picker öffnet; DragEvent-Drop mit echten File-Objekten → Thumbnail). Fixes: Drop jetzt im ganzen Formular akzeptiert (nicht nur Box), globaler dragover/drop-Guard gegen Browser-Navigation bei Daneben-Drop, fehlgeschlagene Konvertierungen erscheinen sichtbar (vorher still geschluckt), Verarbeitungs-Indikator, `e.target.value=""` erlaubt erneutes Wählen derselben Datei, Keyboard-Bedienung (Enter/Space).
+- HEIC mit leerem MIME (Dateimanager-Fall) und JPEG mit leerem MIME werden per Extension-Fallback erkannt.
+
 ## 2026-09-15 — HEIC-Upload gefixt + Asset-Caching
 
 - HEIC-Dateien erschienen im Dateidialog nicht bzw. wurden verworfen: `accept` um `.heic/.heif/.hif`-Extension erweitert (MIME-Datenbanken vieler Systeme kennen HEIC nicht), Datei-Erkennung mit Extension-Fallback für leere/generische MIME-Typen, fehlerhafte Einzeldateien brechen den Batch nicht mehr ab. Mit echtem HEIC-Sample (libheif-Testbild) end-to-end verifiziert: Upload → HEIC→JPEG → Vision-Call → Listing.
