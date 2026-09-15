@@ -70,7 +70,9 @@
     "quotaUnlimited": "Supportniveau: geen limiet op generaties",
     "quotaExceeded": "Gratis quotum opgebruikt. Zie Prijzen.",
     "errorProvider": "Provider-fout",
-    "errorGeneric": "Genereren mislukt"
+    "errorGeneric": "Genereren mislukt",
+    "imageProcessing": "Afbeeldingen verwerken…",
+    "imageFailed": "{{count}} afbeelding(en) konden niet worden verwerkt."
   },
   "feedback": {
     "question": "Was dit resultaat goed?",

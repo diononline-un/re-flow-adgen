@@ -47,12 +47,25 @@ export default function GeneratePage() {
   const [sessionHistory, setSessionHistory] = useState<GenerateResponse[]>([]);
   const [error, setError] = useState("");
   const [quota, setQuota] = useState<Quota | null>(null);
+  const [processing, setProcessing] = useState(false);
+  const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     api<{ platforms: Platform[] }>("/platforms")
       .then((res) => setPlatforms(res.platforms))
       .catch(() => {});
+  }, []);
+
+  // Verhindert Browser-Navigation bei Drag&Drop daneben (Standard-Verhalten öffnet sonst das Bild)
+  useEffect(() => {
+    const prevent = (e: DragEvent) => e.preventDefault();
+    window.addEventListener("dragover", prevent);
+    window.addEventListener("drop", prevent);
+    return () => {
+      window.removeEventListener("dragover", prevent);
+      window.removeEventListener("drop", prevent);
+    };
   }, []);
 
   useEffect(() => {
@@ -75,15 +88,23 @@ export default function GeneratePage() {
   const addFiles = async (files: FileList | File[]) => {
     const list = Array.from(files).slice(0, 24);
     const compressed: string[] = [];
-    for (const f of list) {
-      if (!isImageFile(f)) continue;
-      try {
-        compressed.push(await compressImage(f));
-      } catch {
-        // einzelne defekte Dateien überspringen, Rest weiterverarbeiten
+    let failed = 0;
+    setFileError("");
+    setProcessing(true);
+    try {
+      for (const f of list) {
+        if (!isImageFile(f)) continue;
+        try {
+          compressed.push(await compressImage(f));
+        } catch {
+          failed++;
+        }
       }
+      if (failed > 0) setFileError(t("generate.imageFailed", { count: failed }));
+      setImages((prev) => [...prev, ...compressed].slice(0, 24));
+    } finally {
+      setProcessing(false);
     }
-    setImages((prev) => [...prev, ...compressed].slice(0, 24));
   };
 
   const submit = async () => {
@@ -144,31 +165,68 @@ export default function GeneratePage() {
         </div>
       )}
 
-      <div className="space-y-6">
+      <div
+        className="space-y-6"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          // Drop irgendwo im Formular akzeptieren; Dropzone selbst stoppt Propagation
+          e.preventDefault();
+          if (e.dataTransfer.files?.length) void addFiles(e.dataTransfer.files);
+        }}
+      >
         {/* Bilder */}
         <div>
           <span className="label-pixel">
             {t("generate.images")} — {t("generate.imagesHint")}
           </span>
           <div
-            className="halftone-light cursor-pointer border-4 border-dashed border-ink bg-paper p-6 text-center"
-            onClick={() => fileRef.current?.click()}
-            onDragOver={(e) => e.preventDefault()}
+            role="button"
+            tabIndex={0}
+            aria-label={t("generate.dropzone")}
+            className={`halftone-light cursor-pointer border-4 border-dashed p-6 text-center ${
+              processing ? "border-signal bg-signal/10" : "border-ink bg-paper"
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              fileRef.current?.click();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fileRef.current?.click();
+              }
+            }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
             onDrop={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               void addFiles(e.dataTransfer.files);
             }}
           >
-            <p className="font-mono text-sm">{t("generate.dropzone")}</p>
+            <p className="font-mono text-sm">
+              {processing ? t("generate.imageProcessing") : t("generate.dropzone")}
+            </p>
             <input
               ref={fileRef}
               type="file"
               accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif,.hif"
               multiple
               className="hidden"
-              onChange={(e) => e.target.files && void addFiles(e.target.files)}
+              onChange={(e) => {
+                const files = e.target.files;
+                e.target.value = ""; // erneutes Wählen derselben Datei ermöglichen
+                if (files) void addFiles(files);
+              }}
             />
           </div>
+          {fileError && (
+            <p className="mt-2 border-2 border-signal bg-signal/10 px-3 py-2 font-mono text-xs text-signal">
+              {fileError}
+            </p>
+          )}
           {images.length > 0 && (
             <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-6">
               {images.map((img, i) => (
