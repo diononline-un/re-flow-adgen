@@ -2,7 +2,7 @@
 
 ## Context
 
-Greenfield-Repo `/home/dion/Projekte/Re-Flow-AdGen`, bisher nur die PRD. Lokaler Docker-Stack, kein VPS-Push. Port-Ring: 2013 (PocketBase), 2014 (Frontend+Reverse-Proxy). Motivation siehe `proposal.md — Why`; Verhaltensverträge in den sechs Specs unter `specs/`.
+Greenfield-Repo `./`, bisher nur die PRD. Lokaler Docker-Stack, kein VPS-Push. Port-Ring: 2013 (PocketBase), 2014 (Frontend+Reverse-Proxy). Motivation siehe `proposal.md — Why`; Verhaltensverträge in den sechs Specs unter `specs/`.
 
 ## Goals / Non-Goals
 
